@@ -7,22 +7,22 @@ class Upis
     protected $table = 'upisi';
 
     protected $fillable = [
-        'student_id', 'predmet_id', 'status', 'ocena',
+        'student_broj_indeksa', 'predmet_id', 'status', 'ocena',
     ];
 
     protected $casts = [
-        'student_id' => 'integer',
-        'predmet_id' => 'integer',
-        'ocena'      => 'integer',
+        'student_id' => 'int',
+        'predmet_id' => 'int',
+        'ocena'      => 'int',
     ];
 
     public function student(): BelongsTo
     {
-        return $this->belongsTo(EloquentStudentModel::class, 'student_id');
+        return $this->belongsTo(Student::class, 'student_broj_indeksa');
     }
 
     public function predmet(): BelongsTo
     {
-        return $this->belongsTo(EloquentPredmetModel::class, 'predmet_id');
+        return $this->belongsTo(Predmet::class, 'predmet_id');
     }
 }

@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('upisi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('studenti')->cascadeOnDelete();
+            $table->string('broj_indeksa');
+            $table->foreign('broj_indeksa')
+                ->references('broj_indeksa')
+                ->on('studenti')
+                ->cascadeOnDelete();
+
             $table->foreignId('predmet_id')->constrained('predmeti')->cascadeOnDelete();
-            $table->enum('status',['upisan','polozio','pao'])->default('upisan');
-            $table->unsignedTinyInteger('ocena')->nullable(); // 6-10
+            $table->enum('status', ['upisan', 'polozio', 'pao'])->default('upisan');
+            $table->unsignedTinyInteger('ocena')->nullable(); // 6–10
             $table->timestamps();
-            $table->unique(['student_id','predmet_id']);
+
+            $table->unique(['broj_indeksa', 'predmet_id']);
         });
     }
 

@@ -13,12 +13,9 @@ class Predmet extends Model
         'ime', 'espb', 'katedra', 'broj_studenata', 'profesor',
     ];
 
-    // Ako si ostavio predmeti BEZ timestamps u migraciji, otvori sledeću liniju:
-    // public $timestamps = false;
-
     protected $casts = [
-        'espb'            => 'integer',
-        'broj_studenata'  => 'integer',
+        'espb'            => 'int',
+        'broj_studenata'  => 'int',
     ];
 
     public function upisi(): HasMany

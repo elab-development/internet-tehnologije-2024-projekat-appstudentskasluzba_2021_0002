@@ -13,25 +13,29 @@ class EloquentPredmetRepository implements PredmetRepositoryInterface
 
     public function paginateWithFilters(?int $perPage, ?int $espbMin, ?string $katedra, ?string $profesor): LengthAwarePaginator
     {
-        $q = Predmet::query();
+        $query = EloquentPredmet::query();
 
         if (!is_null($espbMin)) {
-            $q->where('espb', '>=', $espbMin);
-        }
-        if (!is_null($katedra) && $katedra !== '') {
-            $q->where('katedra', 'LIKE', "%{$katedra}%");
-        }
-        if (!is_null($profesor) && $profesor !== '') {
-            $q->where('profesor', 'LIKE', "%{$profesor}%");
+            $query->where('espb', '>=', $espbMin);
         }
 
-        return $q->orderBy('ime')->paginate($perPage ?? 10);
+        if (!empty($katedra)) {
+            $query->where('katedra', 'like', "%{$katedra}%");
+        }
+
+        if (!empty($profesor)) {
+            $query->where('profesor', 'like', "%{$profesor}%");
+        }
+
+        return $query
+            ->orderBy('ime')
+            ->paginate($perPage ?? 10)
+            ->through(fn (EloquentPredmet $m) => PredmetMapper::toDomain($m));
     }
 
     public function findById(int $id): DomainPredmet
     {
         return PredmetMapper::toDomain(EloquentPredmet::findOrFail($id));
-
     }
 
     public function create(array $data): DomainPredmet
@@ -49,6 +53,5 @@ class EloquentPredmetRepository implements PredmetRepositoryInterface
     public function delete(DomainPredmet $predmet): void
     {
         EloquentPredmet::findOrFail($predmet->id)->delete();
-
     }
 }
