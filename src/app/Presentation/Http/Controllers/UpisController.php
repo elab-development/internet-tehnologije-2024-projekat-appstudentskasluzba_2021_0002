@@ -3,8 +3,8 @@
 namespace App\Presentation\Http\Controllers;
 
 use App\Application\Models\Upis;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class UpisController extends Controller
 {

@@ -23,6 +23,6 @@ class Predmet extends Model
 
     public function upisi(): HasMany
     {
-        return $this->hasMany(EloquentUpisModel::class, 'predmet_id');
+        return $this->hasMany(Upis::class, 'predmet_id');
     }
 }
